@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vigna Sai Home Foods - Pure Home-Style Cooking | Hyderabad</title>
+
+  <!-- Embedded styles -->
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;color:#333;background:#fafafa;line-height:1.6}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600}
+
+    /* NAVBAR */
+    .navbar{position:fixed;top:0;width:100%;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);z-index:1000;padding:1rem 0}
+    .nav-container{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+    .nav-logo h2{color:#ff6b35;font-size:1.8rem;margin:0}
+    .nav-menu{display:flex;list-style:none;align-items:center;gap:1.2rem}
+    .nav-link{display:inline-block;padding:8px 16px;border-radius:25px;background:transparent;color:#333;font-weight:500;transition:all 0.3s ease;text-decoration:none}
+    .nav-link i{margin-right:8px}
+    .nav-link:hover{background:#ff6b35;color:#fff;box-shadow:0 4px 12px rgba(255,107,53,0.4)}
+    .cart-icon{position:relative;cursor:pointer;color:#ff6b35}
+    .cart-count{position:absolute;top:-8px;right:-8px;background:#ff6b35;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+
+    /* HERO */
+    .hero{min-height:60vh;display:flex;align-items:center;padding:120px 20px 60px;background:linear-gradient(135deg,#fff,#fff5f0)}
+    .hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+    .hero-buttons{margin-top:20px}
+    .hero-buttons .btn-primary{margin-right:10px}
+
+    /* BUTTONS */
+    .btn-primary{background:linear-gradient(135deg,#ff6b35,#ff8c42);color:#fff;padding:12px 24px;border-radius:50px;border:none;cursor:pointer}
+    .btn-secondary{background:transparent;color:#ff6b35;border:2px solid #ff6b35;padding:10px 20px;border-radius:50px}
+
+    /* CATEGORY BUTTONS */
+    .category-btn{padding:10px 18px;border-radius:25px;border:2px solid #ff6b35;background:#fff;color:#ff6b35;font-weight:600;cursor:pointer;transition:all 0.25s ease;display:inline-flex;align-items:center;gap:8px}
+    .category-btn i{width:18px;text-align:center}
+    .category-btn:hover{background:#ff6b35;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,107,53,0.4)}
+    .category-btn.active{background:linear-gradient(135deg,#ff6b35,#ff8c42);color:#fff;border:none;box-shadow:0 4px 12px rgba(255,107,53,0.4)}
+
+    /* MENU */
+    .menu-section{background:#f8f9fa;padding:40px 0}
+    .section-title{text-align:center;margin-bottom:2rem}
+    .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;padding:0 20px}
+    .menu-item{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);transition:transform .15s}
+    .menu-item:hover{transform:translateY(-6px)}
+    .menu-item img{width:100%;height:180px;object-fit:cover}
+    .menu-item-content{padding:12px}
+    .menu-item h3{margin-bottom:.5rem}
+    .menu-item p{color:#666;margin-bottom:8px}
+    .menu-item-footer{display:flex;justify-content:space-between;align-items:center}
+    .price{color:#ff6b35;font-weight:700}
+    .add-to-cart{background:#ff6b35;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+    .cat-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #eee;font-size:13px;color:#666;margin-bottom:8px}
+
+    /* CART */
+    .cart-sidebar{position:fixed;top:0;right:-400px;width:360px;height:100vh;background:#fff;box-shadow:-6px 0 20px rgba(0,0,0,.08);transition:right .25s;display:flex;flex-direction:column;z-index:1500}
+    .cart-sidebar.open{right:0}
+    .cart-header{padding:16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+    .cart-items{flex:1;overflow:auto;padding:12px}
+    .cart-item{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #f3f3f3}
+    .cart-item img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+    .cart-item-info{flex:1}
+    .cart-item-controls{display:flex;align-items:center;gap:8px}
+    .quantity-btn{background:#ff6b35;color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer}
+    .cart-footer{padding:16px;border-top:1px solid #eee}
+    .empty-cart{text-align:center;padding:24px;color:#666}
+
+    /* CHECKOUT */
+   /* === CHECKOUT SECTION === */
+#checkoutPage {
+  display: none;
+  padding: 60px 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+}
+
+@media(max-width: 920px) {
+  .wrap { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* QR Box with glass effect */
+.qrbox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  background: rgba(255,255,255,0.9);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+#qrcode {
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg,#fff,#fdfdfd);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+#checkoutPage input, #checkoutPage textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+#checkoutPage input:focus, #checkoutPage textarea:focus {
+  outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 6px rgba(255,107,53,0.4);
+}
+
+/* Buttons */
+#checkoutPage .btn {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+#checkoutPage .btn-primary {
+  background: linear-gradient(135deg,#ff6b35,#ff8c42);
+  color: #fff;
+}
+
+#checkoutPage .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(255,107,53,0.4);
+}
+
+#checkoutPage .btn-outline {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+}
+
+#checkoutPage .btn-outline:hover {
+  border-color: #ff6b35;
+  color: #ff6b35;
+  transform: scale(1.05);
+}
+
+
+    /* FOOTER */
+    footer.footer{background:#222;color:#ccc;padding:24px;margin-top:32px}
+    .footer-content{display:flex;gap:16px;flex-wrap:wrap}
+    .footer-section h3{color:#ff6b35}
+    .footer-bottom{text-align:center;margin-top:12px;color:#aaa}
+    /* Floating WhatsApp Button */
+.whatsapp-float {
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 28px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  text-decoration: none;
+  color: #fff;
+}
+
+  </style>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+ <!-- NAVBAR -->
+<nav class="navbar" style="position:fixed;top:0;width:100%;background:rgba(255,255,255,.95);
+                            backdrop-filter:blur(10px);z-index:1000;padding:1rem 0;box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+  <div class="nav-container" style="max-width:1200px;margin:0 auto;padding:0 20px;
+                                     display:flex;justify-content:space-between;align-items:center">
+    <div class="nav-logo">
+      <h2 style="color:#ff6b35;font-size:1.8rem;margin:0">Vigna Sai Home Foods</h2>
+    </div>
+    <ul class="nav-menu" style="display:flex;list-style:none;align-items:center;gap:1.2rem">
+      <li><a href="#home" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#menu" class="nav-link"><i class="fas fa-utensils"></i> Menu</a></li>
+      <li><a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="#services" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a></li>
+      <li class="cart-icon" onclick="toggleCart()"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero" 
+         style="height:100vh;display:flex;align-items:center;justify-content:center;
+                background:linear-gradient(135deg,#fffaf5,#fff0e6);padding:40px;margin-top:70px;">
+  <div class="hero-content" 
+       style="display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;max-width:1200px;width:100%;">
+
+    <!-- Left Side: Logo + Text -->
+    <div class="hero-left" style="text-align:left">
+      <img src="cropped_image.png" alt="VignaSai Home Foods Logo"
+           style="width:220px;margin-bottom:20px;border-radius:50%;
+                  box-shadow:0 6px 18px rgba(0,0,0,0.25)">
+      <h1 style="font-size:2.8rem;color:#ff6b35;margin-bottom:15px">
+        Welcome to VignaSai Home Foods
+      </h1>
+      <p style="font-size:1.2rem;color:#444;margin-bottom:10px">
+        <em>“Taste of Tradition, Straight from Our Kitchen to Your Home”</em>
+      </p>
+      <p style="font-size:1rem;color:#555;margin-bottom:25px">
+        100% Organic • Pure Vegetarian • Authentic Hyderabad Flavors
+      </p>
+      <div class="hero-buttons" style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn-primary" 
+                onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})"
+                style="font-size:1rem;padding:14px 28px">
+          <i class="fas fa-utensils"></i> Explore Menu
+        </button>
+        <a href="https://wa.me/916302015179?text=Hello%20Vigna%20Sai%20Home%20Foods,%20I%20would%20like%20to%20order." 
+           class="btn-secondary" 
+           style="text-decoration:none;font-size:1rem;padding:12px 26px;display:inline-block">
+          <i class="fab fa-whatsapp"></i> Order on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Side: Founder Photo -->
+    <div class="hero-right" style="text-align:center">
+      <img src="123.jpg" alt="Founder of VignaSai Home Foods"
+           style="width:100%;max-width:380px;border-radius:20px;
+                  box-shadow:0 10px 25px rgba(0,0,0,0.25);margin-bottom:12px">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#ff6b35;margin-top:10px;letter-spacing:2px">
+        FOUNDER
+      </h3>
+    </div>
+
+  </div>
+</section>
+
+
+
+  <!-- MENU -->
+  <section id="menu" class="menu-section">
+    <div class="container">
+      <h2 class="section-title">Our Delicious Menu</h2>
+      <div class="menu-categories" style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+        <button class="category-btn active" data-category="all"><i class="fas fa-list"></i> All Items</button>
+        <button class="category-btn" data-category="sweets"><i class="fas fa-candy-cane"></i> Sweets</button>
+        <button class="category-btn" data-category="pickles"><i class="fas fa-jar"></i> Pickles</button>
+        <button class="category-btn" data-category="snacks"><i class="fas fa-cookie-bite"></i> Snacks</button>
+        <button class="category-btn" data-category="podulu"><i class="fas fa-pepper-hot"></i> Podulu</button>
+      </div>
+      <div id="menuGrid" class="menu-grid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="container" style="padding:32px 0">
+    <h2 class="section-title">About Us</h2>
+    <p>
+      At <strong>Vigna Sai Home Foods</strong>, we believe in bringing the 
+      <em>authentic flavors of home</em> straight to your plate. 
+      Every sweet, pickle, and snack is prepared using traditional 
+      recipes that have been passed down through generations.  
+    </p>
+    <p style="margin-top:10px">
+      Our promise is to deliver food that’s made with <strong>pure ingredients, 
+      no shortcuts, and a lot of love</strong> — just the way it’s made at home.  
+      Whether it’s festive sweets, tangy pickles, crunchy snacks, or 
+      special <em>Podulu</em>, we ensure freshness and quality in every bite.
+    </p>
+    <p style="margin-top:10px">
+      Based in Hyderabad, we proudly serve families across the city who crave 
+      <strong>healthy, home-style cooking</strong> at affordable prices.
+    </p>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="container" style="padding:24px 0">
+    <h2 class="section-title">Our Services</h2>
+    <ul style="list-style:none;padding:0;line-height:1.8">
+      <li><i class="fas fa-truck"></i> <strong>Home Delivery:</strong> Fresh food delivered across Hyderabad.</li>
+      <li><i class="fas fa-box-open"></i> <strong>Bulk Orders:</strong> Perfect for functions, festivals, and family gatherings.</li>
+      <li><i class="fas fa-bell-concierge"></i> <strong>Pre-Orders:</strong> Reserve your favorite items in advance.</li>
+      <li><i class="fas fa-gift"></i> <strong>Festive Hampers:</strong> Curated sweet and snack boxes for special occasions.</li>
+      <li><i class="fas fa-seedling"></i> <strong>Pure Ingredients:</strong> No preservatives, no artificial colors — just authentic taste.</li>
+    </ul>
+    <p style="margin-top:10px">
+      We aim to make every order a delightful experience with 
+      <strong>timely delivery and uncompromised taste</strong>.
+    </p>
+  </section>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total"><h3>Total: ₹<span id="cartTotal">0</span></h3></div>
+      <button class="btn-primary" onclick="goToCheckout()"><i class="fas fa-arrow-right"></i> Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT -->
+  <section id="checkoutPage">
+    <div class="wrap">
+      <div class="card">
+        <h1>Checkout — Your Cart</h1>
+        <div id="cartList" class="cart-list"></div>
+        <div class="summary" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between"><div class="muted">Subtotal</div><div id="subtotal">₹0.00</div></div>
+          <div style="display:flex;justify-content:space-between"><div class="muted">Delivery</div><div id="delivery">₹0.00</div></div>
+          <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:8px"><div>Total</div><div id="total">₹0.00</div></div>
+        </div>
+        <div style="height:12px"></div>
+        <div style="display:grid;gap:8px">
+          <input id="custName" type="text" placeholder="Your name" />
+          <input id="custPhone" type="tel" placeholder="Phone (10 digits)" />
+          <textarea id="custAddr" rows="3" placeholder="Delivery address"></textarea>
+        </div>
+      </div>
+
+      <div class="card qrbox">
+        <div style="width:100%;display:flex;justify-content:space-between;align-items:center">
+          <div><strong>Pay with UPI</strong><div style="font-size:13px;color:#666">Scan the QR or open UPI app via link</div></div>
+        </div>
+        <div id="qrcode" aria-hidden="true"></div>
+        <div style="width:100%;margin-top:8px">
+          <div class="controls" style="margin-bottom:8px">
+            <button id="copyLink" class="btn btn-outline"><i class="fas fa-link"></i> Copy UPI Link</button>
+            <button id="downloadQR" class="btn btn-primary"><i class="fas fa-download"></i> Download QR</button>
+          </div>
+          <input id="upiLink" type="text" readonly style="width:100%;padding:8px;border-radius:8px;border:1px solid #eee" />
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:12px">
+          <button id="confirmBtn" class="btn btn-primary"><i class="fab fa-whatsapp"></i> I have paid — Confirm & send</button>
+          <button class="btn btn-outline" onclick="backToShop()"><i class="fas fa-arrow-left"></i> Back to Shop</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section"><h3>Vigna Sai Home Foods</h3><p>Authentic taste with pure ingredients.</p></div>
+        <div class="footer-section"><h4>Contact Info</h4><p><i class="fas fa-phone"></i> +91 63035 43141</p></div>
+      </div>
+      <div class="footer-bottom">&copy; 2022 Vigna Sai Home Foods</div>
+    </div>
+  </footer>
+
+  <!-- QR LIBRARY -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- SCRIPT -->
+  <script>
+    const menuItems = [
+      { id: 1, name: "Boondi Laddu", category: "sweets", price: 150, image:"boondi laddu.jpg", description: "Sweet boondi laddus" },
+      { id: 2, name: "Rava Laddu", category: "sweets", price: 120, image: "rava ladu.jpg", description: "Rava based laddus" },
+     { id: 3, name: "Mothichur Laddu", category: "sweets", price: 200, image: "mothichur.jpg", description: "Classic mothichoor laddus" },
+      { id: 4, name: "Sunnundalu", category: "sweets", price: 180, image: "sunnunda.jpg", description: "Sunnundalu delicacy" },
+      { id: 5, name: "Multigrain Laddu", category: "sweets", price: 400, image: "multigrain laddu.jpg", description: "Healthy multigrain laddus" },
+      { id: 6, name: "Nethi Ariselu", category: "sweets", price: 80, image: "nethiariselu.jpg", description: "Traditional ariselu" },
+      { id: 7, name: "Nuvvula Ariselu", category: "sweets", price: 250, image: "nuvu ariselu.jpg", description: "Sesame ariselu" },
+      { id: 8, name: "Bellam Gavvalu", category: "sweets", price: 220, image: "bellam gavalu.jpg", description: "Sweet gavvalu" },
+      { id: 9, name: "Kajji Kayalu", category: "sweets", price: 120, image: "kajukai.jpg", description: "Crispy kajjikayalu" },
+      { id: 10, name: "Chalividi", category: "sweets", price: 180, image: "salividi.jpg", description: "Chalividi sweets" },
+
+      { id: 11, name: "Avakai Pickle", category: "pickles", price: 190, image: "avakai.jpg", description: "Red mango avakai" },
+      { id: 12, name: "Magai Avakai Pickle", category: "pickles", price: 100, image: "magai avakai.jpg", description: "Magai avakai" },
+      { id: 13, name: "Gongura Pickle", category: "pickles", price: 100, image: "gongura.jpg", description: "Tangy gongura" },
+      { id: 14, name: "Pandu Mirchi Pickle", category: "pickles", price: 100, image: "pandu mirchi.jpg", description: "Spicy mirchi pickle" },
+      { id: 15, name: "Amla Pickle", category: "pickles", price: 100, image: "amla.jpg", description: "Amla pickles" },
+      { id: 16, name: "Dosa Avakai Pickle", category: "pickles", price: 100, image: "dosa avakai.jpg", description: "Tasty dosa pickle" },
+      { id: 17, name: "Cauli Flower Pickle", category: "pickles", price: 100, image: "cauli.jpg", description: "Cauliflower pickle" },
+      { id: 18, name: "Curryleaves Pickle", category: "pickles", price: 100, image: "curryleaves.jpg", description: "Curry leaves pickle" },
+      { id: 19, name: "Chintakai Pickle", category: "pickles", price: 100, image: "chintakai.jpg", description: "Chintakai pickle" },
+      { id: 20, name: "Tomato Nilava Pickle", category: "pickles", price: 100, image: "tamota nilava.jpg", description: "Tomato nilava" },
+      { id: 21, name: "Allam Pickle", category: "pickles", price: 100, image: "allam.jpeg", description: "Ginger pickle" },
+      { id: 22, name: "Nimmakaya Pickle", category: "pickles", price: 100, image: "nima pachadi.jpg", description: "Lemon pickle" },
+
+      { id: 23, name: "Boondi (Ghee & Normal)", category: "snacks", price: 100, image: "boondi.jpeg", description: "Crispy boondi" },
+      { id: 24, name: "Chakralu", category: "snacks", price: 100, image: "chakralu.jpeg", description: "Crispy chakralu" },
+      { id: 25, name: "Chakralu (Urad Flour)", category: "snacks", price: 100, image: "chakraluur.jpeg", description: "Urad chakralu" },
+      { id: 26, name: "Chakralu (All Varieties)", category: "snacks", price: 100, image: "chak.jpeg", description: "Mixed chakralu" },
+      { id: 27, name: "Jantikalu", category: "snacks", price: 100, image: "jantrikalu.jpg", description: "Jantikalu snack" },
+      { id: 28, name: "Spicy Gavvalu", category: "snacks", price: 100, image: "spicy gavalu.jpeg", description: "Spicy gavvalu" },
+
+      { id: 29, name: "Munagaku Podi", category: "podulu", price: 100, image: "munugu.jpeg", description: "Munagaku podi" },
+      { id: 30, name: "Nuvvula Podi", category: "podulu", price: 100, image: "nuvula karam.jpeg", description: "Sesame podi" },
+      { id: 31, name: "Kobbari Karam Podi", category: "podulu", price: 100, image: "kobbari.jpeg", description: "Coconut podi" },
+      { id: 32, name: "Sambar Karam", category: "podulu", price: 100, image: "sambar.jpeg", description: "Sambar podi" },
+      { id: 33, name: "Kandi Podi", category: "podulu", price: 100, image: "kandi.jpg", description: "Kandi podi" },
+      { id: 34, name: "Java Powder", category: "podulu", price: 100, image: "millet.jpeg", description: "Java powder" },
+      { id: 35, name: "Dhaniyalankaram", category: "podulu", price: 100, image: "daniyala.jpeg", description: "Coriander podi" },
+      { id: 36, name: "Garam Masala", category: "podulu", price: 100, image: "garam masala.jpeg", description: "Spice mix" }
+    ];
+
+    const menuGrid = document.getElementById("menuGrid");
+    const categoryButtons = document.querySelectorAll(".category-btn");
+    const cartItemsEl = document.getElementById("cartItems");
+    const cartCountEl = document.querySelector(".cart-count");
+    const cartTotalEl = document.getElementById("cartTotal");
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function getCategoryIconHTML(cat) {
+      const c = cat.toLowerCase();
+      if (c === "sweets") return '<span class="cat-badge"><i class="fas fa-candy-cane"></i> Sweets</span>';
+      if (c === "pickles") return '<span class="cat-badge"><i class="fas fa-jar"></i> Pickles</span>';
+      if (c === "snacks") return '<span class="cat-badge"><i class="fas fa-cookie-bite"></i> Snacks</span>';
+      if (c === "podulu") return '<span class="cat-badge"><i class="fas fa-pepper-hot"></i> Podulu</span>';
+      return `<span class="cat-badge">${cat}</span>`;
+    }
+
+    function renderMenu(category = "all") {
+      menuGrid.innerHTML = "";
+      const filter = category.toLowerCase();
+      const filteredItems = filter === "all" ? menuItems : menuItems.filter(item => item.category.toLowerCase() === filter);
+      filteredItems.forEach((item) => {
+        const card = document.createElement("div");
+        card.classList.add("menu-item");
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="menu-item-content">
+            ${getCategoryIconHTML(item.category)}
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <div class="menu-item-footer">
+              <span class="price">₹${item.price}</span>
+              <button class="add-to-cart" onclick="addToCart(${item.id})">Add</button>
+            </div>
+          </div>
+        `;
+        menuGrid.appendChild(card);
+      });
+    }
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".category-btn.active").classList.remove("active");
+        btn.classList.add("active");
+        renderMenu(btn.dataset.category);
+      });
+    });
+
+    renderMenu();
+
+    function toggleCart() {
+      document.getElementById("cartSidebar").classList.toggle("open");
+      renderCart();
+    }
+
+    function addToCart(id) {
+      const item = menuItems.find(m => m.id === id);
+      const exist = cart.find(c => c.id === id);
+      if (exist) {
+        exist.qty++;
+      } else {
+        cart.push({ ...item, qty: 1 });
+      }
+      saveCart(); renderCart();
+    }
+
+    function updateQty(id, change) {
+      const item = cart.find(c => c.id === id);
+      if (!item) return;
+      item.qty += change;
+      if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+      saveCart(); renderCart();
+    }
+
+    function saveCart(){ localStorage.setItem("cart", JSON.stringify(cart)); }
+
+    function renderCart() {
+      cartItemsEl.innerHTML = "";
+      let total = 0;
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = `<p class="empty-cart">Your cart is empty</p>`;
+      } else {
+        cart.forEach(item => {
+          total += item.price * item.qty;
+          const el = document.createElement("div");
+          el.classList.add("cart-item");
+          el.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-info"><h4>${item.name}</h4><div>₹${item.price} × ${item.qty}</div></div>
+            <div class="cart-item-controls">
+              <button class="quantity-btn" onclick="updateQty(${item.id},-1)">-</button>
+              <span>${item.qty}</span>
+              <button class="quantity-btn" onclick="updateQty(${item.id},1)">+</button>
+            </div>
+          `;
+          cartItemsEl.appendChild(el);
+        });
+      }
+      cartCountEl.textContent = cart.reduce((a, b) => a + b.qty, 0);
+      cartTotalEl.textContent = total;
+    }
+
+    renderCart();
+
+    function goToCheckout() {
+      if (cart.length === 0) { alert("Your cart is empty!"); return; }
+      document.getElementById("checkoutPage").style.display = "block";
+      document.getElementById("cartSidebar").classList.remove("open");
+      document.getElementById("checkoutPage").scrollIntoView({behavior:"smooth"});
+
+      const cartList = document.getElementById("cartList");
+      const subtotalEl = document.getElementById("subtotal");
+      const deliveryEl = document.getElementById("delivery");
+      const totalEl = document.getElementById("total");
+
+      cartList.innerHTML = "";
+      let subtotal = 0;
+      cart.forEach(item => {
+        subtotal += item.price * item.qty;
+        const div = document.createElement("div");
+        div.style.marginBottom = "8px";
+        div.innerHTML = `${item.name} × ${item.qty} = ₹${item.price * item.qty}`;
+        cartList.appendChild(div);
+      });
+
+      const delivery = 0;
+      const total = subtotal + delivery;
+      subtotalEl.textContent = `₹${subtotal}`;
+      deliveryEl.textContent = `₹${delivery}`;
+      totalEl.textContent = `₹${total}`;
+
+      generateUPI(total);
+    }
+
+    function backToShop() {
+      document.getElementById("checkoutPage").style.display = "none";
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function generateUPI(amount) {
+      const upiId = "9392404467@ybl";
+      const name = "VignaSai HomeFoods";
+      const url = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+      document.getElementById("upiLink").value = url;
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = "";
+      new QRCode(qrContainer, { text: url, width: 180, height: 180 });
+    }
+
+    document.getElementById("copyLink").addEventListener("click", () => {
+      const input = document.getElementById("upiLink");
+      input.select();
+      document.execCommand("copy");
+      alert("UPI link copied!");
+    });
+
+    document.getElementById("downloadQR").addEventListener("click", () => {
+      const canvas = document.querySelector("#qrcode canvas");
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL();
+      link.download = "upi_qr.png";
+      link.click();
+    });
+
+    document.getElementById("confirmBtn").addEventListener("click", () => {
+      const name = document.getElementById("custName").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const addr = document.getElementById("custAddr").value.trim();
+      if (!name || !phone || !addr) {
+        alert("Please fill all details!");
+        return;
+      }
+      let orderText = "New Order from Vigna Sai Home Foods:%0a";
+      orderText += `Name: ${name}%0aPhone: ${phone}%0aAddress: ${addr}%0a%0aItems:%0a`;
+      cart.forEach(item => orderText += `${item.name} × ${item.qty} = ₹${item.price * item.qty}%0a`);
+      const total = cart.reduce((a, b) => a + b.price * b.qty, 0);
+      orderText += `%0aTotal: ₹${total}`;
+      const whatsappNumber = "9392404467";
+      window.open(`https://wa.me/${whatsappNumber}?text=${orderText}`, "_blank");
+    });
+  </script>
+  <!-- Floating WhatsApp Button -->
+<a href="https://wa.me/916302015179?text=Hello%20Vigna%20Sai%20Home%20Foods,%20I%20would%20like%20to%20place%20an%20order." 
+   class="whatsapp-float" target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+</body>
+</html>
